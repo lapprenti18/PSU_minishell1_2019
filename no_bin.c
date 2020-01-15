@@ -48,6 +48,10 @@ int just_cd_argv(char **cd, char **env)
     int error = 0;
 
     for (temp = 0; cd[temp]; temp += 1);
+    if (temp == 1) {
+        just_cd(env);
+        return (0);
+    }
     if (temp > 2)
         my_putstr("cd: Trop d'arguments.", 0, 1);
     if (cd[1][0] == '~' || temp == 1)
