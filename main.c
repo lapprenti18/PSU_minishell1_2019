@@ -24,7 +24,8 @@ void main_loop(char **env, last_line_t *last_line)
         signal(SIGINT, siginthandler);
         display_prompt();
         if ((read = getline(&line, &len, stdin)) == -1) {
-            my_putstr("exit", 0, 1);
+            if (isatty(0))
+                my_putstr("exit", 0, 1);
             exit (0);
         }
         no_binary = no_bin(env, line, last_line);

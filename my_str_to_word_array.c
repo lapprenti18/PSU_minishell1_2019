@@ -9,7 +9,7 @@
 
 int    is_alpha1(char c)
 {
-    return ((c != '\n') && (c != ' ') && (c != '\0'));
+    return ((c != '\t') && (c != '\n') && (c != ' ') && (c != '\0'));
 }
 
 int    nb_word1(char *str)
