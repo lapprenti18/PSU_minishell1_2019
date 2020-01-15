@@ -15,6 +15,7 @@ SRC	=	main.c	\
 		my_str_to_word_array.c	\
 		binary.c	\
 		prompt.c	\
+		str_ncmp.c	\
 
 NAME	=	mysh
 

@@ -30,3 +30,4 @@ char **my_str_to_word_array_path(char *str);
 char **my_str_to_word_array(char *str);
 void display_prompt(void);
 void go_fork( char **env, char **cmd);
+int str_ncmp(char *str, char *str2);

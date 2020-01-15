@@ -12,8 +12,12 @@ char **search_path(char **env)
     int temp = 0;
     char **path;
 
-    for (; env[temp][0] != 'P' || env[temp][1] != 'A' || \
-env[temp][2] != 'T' || env[temp][3] != 'H' || env[temp][4] != '='; temp += 1);
+    if (env[0] == NULL)
+        return (NULL);
+    for (; str_ncmp("PATH=", env[temp]) != 1; temp += 1) {
+        if (env[temp] == NULL)
+            return (NULL);
+    }
     path = my_str_to_word_array_path(env[temp]);
     return (path);
 }
@@ -41,6 +45,10 @@ void go_fork( char **env, char **cmd)
     int acces = 0;
     int temp;
 
+    if (path == NULL) {
+        my_putstr(cat(cmd[0], ": Commande introuvable."), 0, 1);
+        return;
+    }
     for (temp = 1; path[temp]; temp += 1) {
         if ((acces = access(cat(cat(path[temp], "/"), cmd[0]), X_OK)) == 0)
             break;
