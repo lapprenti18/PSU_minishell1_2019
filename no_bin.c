@@ -30,7 +30,7 @@ char **search_home(char **env)
     return (path);
 }
 
-int just_cd(char **env)
+int just_cd(char **env, last_line_t *last_line)
 {
     char **home = search_home(env);
 
@@ -38,25 +38,45 @@ int just_cd(char **env)
         my_putstr("cd: No home directory.", 0, 1);
         return (0);
     }
+    my_memset(last_line->line, 9999);
+    getcwd(last_line->line, 9999);
     chdir(home[1]);
     return (0);
 }
 
-int just_cd_argv(char **cd, char **env)
+void cd_jsp(char **cd, char **env, int temp, last_line_t *last_line) 
+{
+    if (temp > 2)
+        my_putstr("cd: Trop d'arguments.", 0, 1);
+    if (cd[1][0] == '~' || temp == 1)
+        just_cd(env, last_line);
+}
+
+int cd_moin(char **env, last_line_t *last_line)
+{
+    if (last_line->line == NULL) {
+        return(just_cd(env, last_line));
+    } else {
+        chdir(last_line->line);
+    }
+}
+
+int just_cd_argv(char **cd, char **env, last_line_t *last_line)
 {
     int temp;
     int error = 0;
 
     for (temp = 0; cd[temp]; temp += 1);
     if (temp == 1) {
-        just_cd(env);
+        just_cd(env, last_line);
         return (0);
     }
-    if (temp > 2)
-        my_putstr("cd: Trop d'arguments.", 0, 1);
-    if (cd[1][0] == '~' || temp == 1)
-        just_cd(env);
+    cd_jsp(cd, env, temp, last_line);
+    if (cd[1][0] == '-')
+        return (cd_moin(env, last_line));
     if (temp == 2 && cd[1][0] != '~') {
+        my_memset(last_line->line, 9999);
+        getcwd(last_line->line, 9999);
         error = chdir(cd[1]);
         if (error == -1)
             perror("error");
@@ -64,26 +84,26 @@ int just_cd_argv(char **cd, char **env)
     return (0);
 }
 
-int my_cd(char *cmd, char **env)
+int my_cd(char *cmd, char **env, last_line_t *last_line)
 {
     if (str_cmp("cd\n", cmd) == 1)
-        return (just_cd(env));
+        return (just_cd(env, last_line));
     if (str_ncmp("cd ", cmd) == 1)
-        return (just_cd_argv(my_str_to_word_array(cmd), env));
+        return (just_cd_argv(my_str_to_word_array(cmd), env, last_line));
     else {
         cmd[my_strlen(cmd) - 1] = '\0';
         my_putstr(cat(cmd, ": Commande introuvable."), 0, 1);
     }
 }
 
-int no_bin(char **env, char *cmd)
+int no_bin(char **env, char *cmd, last_line_t *last_line)
 {
     if (str_cmp("exit\n", cmd) == 1)
         return (-1);
     if (str_cmp("env\n", cmd) == 1)
         return (display_env(env));
     if (str_ncmp("cd", cmd) == 1) {
-        my_cd(cmd, env);
+        my_cd(cmd, env, last_line);
         return (0);
     }
     return (2);

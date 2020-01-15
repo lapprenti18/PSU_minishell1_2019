@@ -16,6 +16,8 @@ SRC	=	main.c	\
 		binary.c	\
 		prompt.c	\
 		str_ncmp.c	\
+		str_cpy.c	\
+		my_memset.c	\
 
 NAME	=	mysh
 
