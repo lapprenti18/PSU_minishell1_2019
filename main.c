@@ -18,9 +18,10 @@ void main_loop(char **env, last_line_t *last_line)
     char* line = NULL;
     size_t len = 0;
     ssize_t read;
-    int no_binary = 0;
+    int no_binary;
 
     do {
+        no_binary = 0;
         signal(SIGINT, siginthandler);
         display_prompt();
         if ((read = getline(&line, &len, stdin)) == -1) {
@@ -31,7 +32,6 @@ void main_loop(char **env, last_line_t *last_line)
         no_binary = no_bin(env, line, last_line);
         if (no_binary == 2)
             go_fork(env, my_str_to_word_array(line));
-        no_binary = 0;
     } while (read != -1 && no_binary != -1);
 }
 
