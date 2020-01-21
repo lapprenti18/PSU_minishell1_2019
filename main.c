@@ -9,13 +9,14 @@
 
 void siginthandler(int sig_num)
 {
+    (void)sig_num;
     signal(SIGINT, siginthandler);
     my_putstr("\n$>", 0, 0);
 }
 
-void main_loop(char **env, last_line_t *last_line)
+void main_loop(env_t *new_env, last_line_t *last_line)
 {
-    char* line = NULL;
+    char *line = NULL;
     size_t len = 0;
     ssize_t read;
     int no_binary;
@@ -29,19 +30,22 @@ void main_loop(char **env, last_line_t *last_line)
                 my_putstr("exit", 0, 1);
             exit (0);
         }
-        no_binary = no_bin(env, line, last_line);
+        no_binary = no_bin(new_env, line, last_line);
         if (no_binary == 2)
-            go_fork(env, my_str_to_word_array(line));
+            go_fork(new_env, my_str_to_word_array(line));
     } while (read != -1 && no_binary != -1);
 }
 
 int main(int ac, char **av, char **env)
 {
     last_line_t last_line;
+    env_t new_env;
 
+    (void)av;
+    new_env.good_env = str_cpy_tab(env);
     last_line.line = malloc(sizeof(char) * 9999);
     if (ac != 1)
         return (84);
-    main_loop(env, &last_line);
+    main_loop(&new_env, &last_line);
     return (0);
 }

@@ -18,6 +18,9 @@ SRC	=	main.c	\
 		str_ncmp.c	\
 		str_cpy.c	\
 		my_memset.c	\
+		unsetenv.c	\
+		setenv.c	\
+		cd.c	\
 
 NAME	=	mysh
 

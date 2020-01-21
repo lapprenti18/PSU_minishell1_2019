@@ -19,7 +19,7 @@ int    nb_word(char *str)
     return (compteur + 2);
 }
 
-int    is_alpha(char c)
+int is_alpha(char c)
 {
     return ((c != ' ') && (c != '=') && (c != ':') && (c != '\0'));
 }

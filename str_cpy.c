@@ -11,3 +11,8 @@ char *str_cpy(char *str)
 {
     return (str);
 }
+
+char **str_cpy_tab(char **tab)
+{
+    return (tab);
+}

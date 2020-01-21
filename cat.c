@@ -17,10 +17,6 @@ char *cat(char *start, char *line)
     reslt = malloc(sizeof(char) * (length_start + length_line + 2));
     for (; a < length_start; a += 1)
         reslt[a] = start[a];
-    // if (reslt[a - 1] != '/') {
-    //     reslt[a] = '/';
-    //     a += 1;
-    // }
     for (int b = 0; b < length_line; b += 1) {
         reslt[a] = line[b];
         a += 1;
