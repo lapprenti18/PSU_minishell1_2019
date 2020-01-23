@@ -61,10 +61,6 @@ void no_trace(env_t *new_env, char **cmd)
         exit (84);
     } else {
         wait(&pid);
-        if (pid > 130 && pid < 140) {
-            my_putstr("Segmentation fault", 0, 1);
-            return;
-        }
     }
     return;
 }
@@ -81,14 +77,14 @@ void go_fork(env_t *new_env, char **cmd)
         my_putstr(cat(cmd[0], ": Command not found."), 0, 1);
         return;
     }
+    if ((access(cmd[0], X_OK)) == 0)
+        return (exection(cmd[0], new_env, cmd));
     if (cmd[0][0] == '/')
         return (no_trace(new_env, cmd));
     for (temp = 1; path[temp]; temp += 1) {
         if ((acces = access(cat(cat(path[temp], "/"), cmd[0]), X_OK)) == 0)
             break;
     }
-    if (acces == 0)
-        exection(cat(cat(path[temp], "/"), cmd[0]), new_env, cmd);
-    else
-        my_putstr(cat(cmd[0], ": Command not found."), 0, 1);
+    (acces == 0) ? exection(cat(cat(path[temp], "/"), cmd[0]), new_env, cmd) :\
+     my_putstr(cat(cmd[0], ": Command not found."), 0, 1);
 }
