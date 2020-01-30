@@ -48,7 +48,8 @@ void print_error(char **cmd)
     else {
         my_putstr(cmd[0], 0, 0);
         write(1, ":", 1);
-        my_putstr(strerror(errno), 0, 1);
+        my_putstr(strerror(errno), 0, 0);
+        my_putstr(".", 0, 1);
     }
 }
 
