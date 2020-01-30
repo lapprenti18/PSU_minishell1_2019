@@ -45,18 +45,21 @@ int new_environement(env_t *new_env, char **tab)
 int error(char *str)
 {
     for (int temps = 0; str[temps]; temps += 1) {
-        if (str[temps] < 'A' || str[temps] > 'Z' && \
-        str[temps] < 'a' || str[temps] > 'z') {
+        if (str[temps] < 'A' || (str[temps] > 'Z' && \
+        str[temps] < 'a') || str[temps] > 'z') {
             return (0);
         }
     }
     return (1);
 }
 
-int display_err(void)
+int display_err(char *str)
 {
-    my_putstr("setenv: Variable name must conta\
-in alphanumeric characters.", 0, 1);
+    if (str[0] < 'A' || (str[0] > 'Z' && \
+        str[0] < 'a') || str[0] > 'z')
+        my_putstr("setenv: Variable name must begin with a letter.", 0, 1);
+    else
+        er(str);
     return (0);
 }
 
@@ -70,7 +73,7 @@ int setenv_(env_t *new_env, char *cmd)
         return (0);
     }
     if (error(tab[1]) == 0)
-            return (display_err());
+            return (display_err(tab[1]));
     if (tab[2] != NULL) {
         if (tab[3] != NULL) {
             my_putstr("setenv: Too many arguments.", 0, 1);

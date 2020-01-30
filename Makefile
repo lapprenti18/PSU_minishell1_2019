@@ -5,23 +5,25 @@
 ## Makefile
 ##
 
-SRC	=	main.c	\
-		cat.c	\
-		my_putstr.c	\
-		my_strlen.c	\
-		no_bin.c	\
-		str_cmp.c	\
-		my_str_to_word_array_path.c	\
-		my_str_to_word_array.c	\
-		binary.c	\
-		prompt.c	\
-		str_ncmp.c	\
-		str_cpy.c	\
-		my_memset.c	\
-		unsetenv.c	\
-		setenv.c	\
-		cd.c	\
-		segfault.c	\
+SRC	=	src/main.c	\
+		src/cat.c	\
+		src/my_putstr.c	\
+		src/my_strlen.c	\
+		src/no_bin.c	\
+		src/str_cmp.c	\
+		src/my_str_to_word_array_path.c	\
+		src/my_str_to_word_array.c	\
+		src/binary.c	\
+		src/prompt.c	\
+		src/str_ncmp.c	\
+		src/str_cpy.c	\
+		src/my_memset.c	\
+		src/unsetenv.c	\
+		src/setenv.c	\
+		src/cd.c	\
+		src/segfault.c	\
+		src/setenv_err.c	\
+		src/cd_err.c	\
 
 NAME	=	mysh
 

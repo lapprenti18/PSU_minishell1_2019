@@ -44,9 +44,9 @@ int no_bin(env_t *new_env, char *cmd, last_line_t *last_line)
         return (-1);
     if (str_cmp("env\n", cmd) == 1)
         return (display_env(new_env));
-    if (str_ncmp("setenv", cmd) == 1)
+    if (str_ncmp_spe("setenv", cmd) == 1)
         return (setenv_(new_env, cmd));
-    if (str_ncmp("unsetenv", cmd) == 1)
+    if (str_ncmp_spe("unsetenv", cmd) == 1)
         return (unsetenv_(new_env, cmd));
     if (str_ncmp("cd", cmd) == 1) {
         my_cd(cmd, new_env, last_line);
