@@ -38,34 +38,15 @@ int tab_lengt(char **tab)
     return (a + 1);
 }
 
-int exit_(char *str)
-{
-    char **error = my_str_to_word_array(str);
-
-    if (str[4] == '\0' || str[5] == '\0')
-        return (-1);
-    if (str[5] < '0' && str[5] < '9' && str[5] != '\0') {
-        my_putstr("exit: Expression Syntax.", 0, 1);
-        return (1);
-    }
-    for (int temp = 6; str[temp]; temp += 1) {
-        if (str[5] < '0' && str[5] < '9' && str[5] != '\0') {
-            my_putstr("exit: Badly formed number.", 0, 1);
-            return (1);
-        }
-    }
-    exit (my_getnbr(error[1]));
-}
-
 int no_bin(env_t *new_env, char *cmd, last_line_t *last_line)
 {
-    if (str_ncmp_spe("exit", cmd) == 1)
-        return(exit_(cmd));
+    if (str_cmp("exit\n", cmd) == 1)
+        return (-1);
     if (str_cmp("env\n", cmd) == 1)
         return (display_env(new_env));
-    if (str_ncmp_spe("setenv", cmd) == 1)
+    if (str_ncmp("setenv", cmd) == 1)
         return (setenv_(new_env, cmd));
-    if (str_ncmp_spe("unsetenv", cmd) == 1)
+    if (str_ncmp("unsetenv", cmd) == 1)
         return (unsetenv_(new_env, cmd));
     if (str_ncmp("cd", cmd) == 1) {
         my_cd(cmd, new_env, last_line);

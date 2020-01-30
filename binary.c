@@ -44,8 +44,7 @@ void print_error(char **cmd)
     if (errno == 2)
         my_putstr(cat(cmd[0], ": Command not found."), 0, 1);
     if (errno == ENOEXEC)
-        my_putstr(cat(cmd[0], ": Exec format error. Wrong Architecture."), \
-        0, 1);
+        my_putstr(cat(cmd[0], ": Exec format error. Wrong Architecture."), 0, 1);
     else {
         my_putstr(cmd[0], 0, 0);
         write(1, ":", 1);
@@ -91,5 +90,5 @@ void go_fork(env_t *new_env, char **cmd)
             break;
     }
     (acces == 0) ? exection(cat(cat(path[temp], "/"), cmd[0]), new_env, cmd) :\
-    my_putstr(cat(cmd[0], ": Command not found."), 0, 1);
+     my_putstr(cat(cmd[0], ": Command not found."), 0, 1);
 }
