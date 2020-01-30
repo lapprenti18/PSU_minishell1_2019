@@ -6,6 +6,7 @@
 ##
 
 SRC	=	src/main.c	\
+		src/my_getnbr.c	\
 		src/cat.c	\
 		src/my_putstr.c	\
 		src/my_strlen.c	\

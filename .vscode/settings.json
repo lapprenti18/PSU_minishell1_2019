@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "random": "c",
-        "cerrno": "c"
+        "cerrno": "c",
+        "my.h": "c"
     }
 }
