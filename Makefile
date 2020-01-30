@@ -21,6 +21,7 @@ SRC	=	main.c	\
 		unsetenv.c	\
 		setenv.c	\
 		cd.c	\
+		segfault.c	\
 
 NAME	=	mysh
 

@@ -22,6 +22,7 @@
 #include <string.h>
 #include <errno.h>
 #include <signal.h>
+#include <sys/sysmacros.h>
 
 typedef struct last_line_s
 {
@@ -59,3 +60,4 @@ void delet_env(env_t *new_env, int incr);
 void add_env(env_t *new_env, int incr, char **tab);
 int new_environement(env_t *new_env, char **tab);
 int setenv_(env_t *new_env, char *cmd);
+void segfault(int pid);

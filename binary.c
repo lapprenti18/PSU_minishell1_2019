@@ -7,6 +7,8 @@
 
 #include "my.h"
 
+void print_error(char **cmd);
+
 char **search_path(env_t *new_env)
 {
     int temp = 0;
@@ -17,7 +19,7 @@ char **search_path(env_t *new_env)
     for (; new_env->good_env[temp] && str_ncmp("PATH=", \
 new_env->good_env[temp]) != 1; temp += 1);
     if (new_env->good_env[temp] == NULL)
-            return (NULL);
+        return (NULL);
     path = my_str_to_word_array_path(new_env->good_env[temp]);
     return (path);
 }
@@ -29,25 +31,25 @@ void exection(char *cmd, env_t *new_env, char **command)
     pid = fork();
     if (pid == 0){
         execve(cmd, command, new_env->good_env);
+        print_error(command);
         exit (84);
     } else {
         wait(&pid);
-        if (pid > 130 && pid < 140) {
-            my_putstr("Segmentation fault", 0, 1);
-            return;
-        }
+        segfault(pid);
     }
 }
 
 void print_error(char **cmd)
 {
-    if (errno == 13)
-        my_putstr(cat(cmd[0], ": Permission denied."), 0, 1);
     if (errno == 2)
         my_putstr(cat(cmd[0], ": Command not found."), 0, 1);
     if (errno == ENOEXEC)
-        my_putstr(cat(cmd[0], ": Exec format err\
-        or. Wrong Architecture."), 0, 1);
+        my_putstr(cat(cmd[0], ": Exec format error. Wrong Architecture."), 0, 1);
+    else {
+        my_putstr(cmd[0], 0, 0);
+        write(1, ":", 1);
+        my_putstr(strerror(errno), 0, 1);
+    }
 }
 
 void no_trace(env_t *new_env, char **cmd)
@@ -61,6 +63,7 @@ void no_trace(env_t *new_env, char **cmd)
         exit (84);
     } else {
         wait(&pid);
+        segfault(pid);
     }
     return;
 }
